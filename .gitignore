@@ -1,0 +1,12 @@
+# 构建产物
+.build/
+.swiftpm/
+build/
+dist/
+*.xcodeproj/xcuserdata/
+.DS_Store
+
+# 本地逆向材料（原厂程序、配置、反编译结果）与个人配置，不入库
+re/
+tools/
+overrides.txt

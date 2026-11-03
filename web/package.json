@@ -1,0 +1,9 @@
+{
+  "name": "a66-keymap-web",
+  "private": true,
+  "type": "module",
+  "description": "A66 键盘网页改键工具（WebHID），纯静态，无依赖",
+  "scripts": {
+    "test": "node --test test/core.test.js"
+  }
+}
