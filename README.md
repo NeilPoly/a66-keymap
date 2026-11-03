@@ -37,7 +37,7 @@ A web-based alternative to the Windows-only driver of the A66 tri-mode mechanica
 macOS 上要注意：
 
 - 要给浏览器开“输入监控”权限：系统设置 → 隐私与安全性 → 输入监控，打开后完全退出浏览器再打开。
-- 装了 Karabiner-Elements 的话，蓝牙下写入前要在 Karabiner 的 Devices 里临时关掉这把键盘的 Modify events，写完再打开。有线和 2.4G 不受影响。
+- 装了 Karabiner-Elements 的话，它会占住键盘，浏览器就打不开（蓝牙和 2.4G 下都会）。写入前在 Karabiner 的 Devices 里临时关掉这把键盘（2.4G 下是 “2.4G Wireless Receiver”）的 Modify events，写完再打开。
 
 ### 改键为什么会莫名丢失
 
@@ -86,7 +86,7 @@ macOS 上要注意：
 2. Connect the keyboard, click “Connect…” and pick it. Each connection type only needs this once.
 3. Click a key to change it (switch to “Fn layer” for the Fn layer), then “Write to keyboard”.
 
-On macOS, give the browser Input Monitoring permission and restart it. With Karabiner-Elements, turn off Modify events for the keyboard while writing over Bluetooth.
+On macOS, give the browser Input Monitoring permission and restart it. With Karabiner-Elements, turn off Modify events for the keyboard (over 2.4 GHz: “2.4G Wireless Receiver”) while writing, or the browser cannot open it.
 
 Factory Fn + Caps Lock is “reset keyboard”: holding it about 5 seconds wipes all remapping. The page offers to move it to Fn + Delete.
 

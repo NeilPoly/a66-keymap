@@ -110,19 +110,28 @@ export class CancelFlag {
   cancel() { this.cancelled = true; }
 }
 
+/**
+ * 打开失败时的提示。浏览器只报 "Failed to open the device"，分不出是被别的程序独占还是没权限，
+ * 所以按常见程度列出来。Mac 上最常见的是 Karabiner-Elements 接管了键盘：蓝牙下改键通道就是键盘本身，
+ * 2.4G 下改键通道和键盘输入在接收器的同一个接口里，开着 Modify events 都会独占（2026-11-03 实测
+ * 2.4G 也会，命令行打开返回 0xE00002C5）；有线没实测，所以不分连接方式一律提示。
+ */
 function openHint(connection) {
-  const hints = [];
-  if (isMac()) {
-    hints.push(L('Mac 上要给浏览器开“输入监控”权限：系统设置 → 隐私与安全性 → 输入监控，打开浏览器，然后完全退出浏览器（⌘Q）再打开。',
-      'On a Mac the browser needs Input Monitoring: System Settings → Privacy & Security → Input Monitoring, enable the browser, then quit it completely (⌘Q) and reopen.'));
-    if (connection === 'bluetooth') {
-      hints.push(L('蓝牙下如果用了 Karabiner-Elements，请在它的 Devices 里临时关掉这把键盘的 Modify events。',
-        'Over Bluetooth with Karabiner-Elements, temporarily turn off Modify events for this keyboard in its Devices tab.'));
-    }
+  if (!isMac()) {
+    return L('键盘可能被别的程序（如原厂驱动）占用了，关掉后刷新页面再试。',
+      'The keyboard may be in use by another program (such as the vendor driver). Close it, reload the page and try again.');
   }
-  hints.push(L('并确认没有别的改键程序（如原厂驱动）在用键盘。',
-    'Also make sure no other remapping program (such as the vendor driver) is using the keyboard.'));
-  return hints.join('\n');
+  const receiver = connection === 'receiver';
+  return [
+    L('键盘可能被别的程序占用了，或者浏览器没有权限：',
+      'The keyboard may be in use by another program, or the browser lacks permission:'),
+    L(`1. 用了 Karabiner-Elements 的话，在它的 Devices 里临时关掉${receiver ? '“2.4G Wireless Receiver”' : '这把键盘'}的 Modify events，刷新页面再试，写完再打开。`,
+      `1. If you use Karabiner-Elements, temporarily turn off Modify events for ${receiver ? '“2.4G Wireless Receiver”' : 'this keyboard'} in its Devices tab, reload the page and try again; turn it back on afterwards.`),
+    L('2. 关掉其他改键程序。',
+      '2. Close any other remapping program.'),
+    L('3. 检查“输入监控”权限：系统设置 → 隐私与安全性 → 输入监控，打开浏览器，然后完全退出浏览器（⌘Q）再打开。',
+      '3. Check Input Monitoring: System Settings → Privacy & Security → Input Monitoring, enable the browser, then quit it completely (⌘Q) and reopen.'),
+  ].join('\n');
 }
 
 /** 打开通道（同一设备已打开时直接用） */

@@ -528,9 +528,11 @@ function renderWrite() {
     const ls = layersToWrite();
     if (ch) body.push(h('p', null, layersText(ch, ls)));
     else body.push(h('p', { class: 'danger-text' }, L('键盘已断开，先重新连接。', 'The keyboard is disconnected; reconnect it first.')));
-    if (ch?.connection === 'bluetooth' && Dev.isMac()) {
-      body.push(h('p', { class: 'muted small' }, L('用了 Karabiner-Elements 的话，先在它的 Devices 里关掉这把键盘的 Modify events，写完再打开。',
-        'Using Karabiner-Elements? Turn off Modify events for this keyboard in its Devices tab first, and back on afterwards.')));
+    // 蓝牙、2.4G 下 Karabiner 开着 Modify events 会独占改键通道（2.4G 是 11-03 实测发现的；有线没实测，不提示）
+    if ((ch?.connection === 'bluetooth' || ch?.connection === 'receiver') && Dev.isMac()) {
+      const target = ch.connection === 'receiver' ? L('“2.4G Wireless Receiver”', '“2.4G Wireless Receiver”') : L('这把键盘', 'this keyboard');
+      body.push(h('p', { class: 'muted small' }, L(`用了 Karabiner-Elements 的话，先在它的 Devices 里关掉${target}的 Modify events，写完再打开。`,
+        `Using Karabiner-Elements? Turn off Modify events for ${target} in its Devices tab first, and back on afterwards.`)));
     }
     body.push(h('p', { class: 'muted small' }, S.lastWritten
       ? L('与上次写入相比的改动：', 'Changes since the last write:')
@@ -616,10 +618,10 @@ function renderHelp() {
       L('电脑上的 Chrome 或 Edge（Windows、macOS、Linux 均可）。Safari、Firefox 和手机浏览器不支持。',
         'Desktop Chrome or Edge (Windows, macOS or Linux). Safari, Firefox and mobile browsers are not supported.')),
     item(L('macOS 上连接失败？', 'Connection fails on macOS?'),
-      L('给浏览器开“输入监控”权限：系统设置 → 隐私与安全性 → 输入监控，打开浏览器，然后完全退出浏览器（⌘Q）再打开。',
-        'Give the browser Input Monitoring permission: System Settings → Privacy & Security → Input Monitoring, enable the browser, then quit it completely (⌘Q) and reopen.'),
-      L('用了 Karabiner-Elements 的话，蓝牙下写入前在它的 Devices 里临时关掉这把键盘的 Modify events，写完再打开。',
-        'With Karabiner-Elements, turn off Modify events for the keyboard in its Devices tab before writing over Bluetooth, and back on afterwards.')),
+      L('用了 Karabiner-Elements 的话，它会占住键盘，浏览器就打不开。在它的 Devices 里临时关掉这把键盘（2.4G 下是“2.4G Wireless Receiver”）的 Modify events，刷新页面再试，写完再打开。',
+        'Karabiner-Elements can hold the keyboard so the browser cannot open it. Temporarily turn off Modify events for the keyboard (over 2.4 GHz: “2.4G Wireless Receiver”) in its Devices tab, reload the page, and turn it back on after writing.'),
+      L('还要给浏览器开“输入监控”权限：系统设置 → 隐私与安全性 → 输入监控，打开浏览器，然后完全退出浏览器（⌘Q）再打开。',
+        'The browser also needs Input Monitoring permission: System Settings → Privacy & Security → Input Monitoring, enable the browser, then quit it completely (⌘Q) and reopen.')),
     item(L('蓝牙模式能做什么？', 'What works over Bluetooth?'),
       L('蓝牙下可以改键写入，但读不了键盘里的键位，这是键盘固件的限制。要读取请用有线或 2.4G。',
         'Over Bluetooth you can write remaps, but the keymap cannot be read back; this is a keyboard firmware limitation. To read, use the cable or 2.4 GHz.'),
