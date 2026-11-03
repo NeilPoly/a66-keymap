@@ -1,7 +1,7 @@
 # A66 Keymap
 
-新盟 A66 三模机械键盘的网页改键工具。在电脑上的 Chrome 或 Edge 里打开就能改键，不用装驱动，Windows、macOS、Linux 都能用。
-A web-based key remapper for the A66 tri-mode mechanical keyboard. Open it in desktop Chrome or Edge — no driver needed.
+新盟 A66 三模机械键盘的网页版改键工具，可以代替只有 Windows 版的官方驱动：Mac、Windows、Linux 上用 Chrome 或 Edge 打开就能改键，不用安装。
+A web-based alternative to the Windows-only driver of the A66 tri-mode mechanical keyboard: remap keys on macOS, Windows or Linux in desktop Chrome or Edge — nothing to install.
 
 **打开使用 / Open：https://www.neilpoly.top/a66/**
 

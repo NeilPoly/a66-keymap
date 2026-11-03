@@ -644,10 +644,10 @@ function renderHelp() {
 function init() {
   document.documentElement.lang = isChinese ? 'zh-CN' : 'en';
   // 标题、描述、规范网址给搜索引擎看（页面里写的是中文版的，英文界面换成英文）
-  document.title = L('新盟 A66 键盘改键工具（网页版）· A66 Keymap', 'A66 Keymap · Web remapper for the A66 tri-mode keyboard');
+  document.title = L('新盟 A66 键盘改键工具：Mac 也能用的网页版驱动 · A66 Keymap', 'A66 Keymap · Mac & web key remapper for the A66 tri-mode keyboard');
   document.querySelector('meta[name="description"]')?.setAttribute('content', L(
-    '新盟 A66 三模机械键盘的网页改键工具：在 Chrome 或 Edge 里直接改键，有线、蓝牙、2.4G 都能写入，不用装驱动，Windows、macOS、Linux 都能用。',
-    'Remap the A66 tri-mode mechanical keyboard in desktop Chrome or Edge: works over USB, Bluetooth and the 2.4 GHz receiver, no driver needed, on Windows, macOS and Linux.'));
+    '新盟 A66 三模机械键盘的网页版改键工具，可以代替只有 Windows 版的官方驱动。Mac、Windows、Linux 上用 Chrome 或 Edge 打开就能改键，有线、蓝牙、2.4G 都能写入，不用安装。',
+    'A web-based alternative to the Windows-only driver of the A66 tri-mode mechanical keyboard: remap keys on macOS, Windows or Linux in Chrome or Edge, over USB, Bluetooth or 2.4 GHz. Nothing to install.'));
   const canonical = document.createElement('link');
   canonical.rel = 'canonical';
   canonical.href = 'https://www.neilpoly.top/a66/' + (langParam ? `?lang=${langParam}` : '');
